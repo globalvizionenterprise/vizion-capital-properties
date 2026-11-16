@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLIPVIZION — AI Real Estate Wholesaling | Global Vizion Enterprise</title>
+<meta name="description" content="FLIPVIZION by Global Vizion Enterprise: browse off-market deals, see the value spread, run the numbers, flip the contract to cash buyers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c; --panel:#131318; --panel2:#1a1a21; --line:#26262f;
+    --gold:#d4af37; --gold2:#f1d27a; --txt:#f2f0e9; --dim:#9a97a3;
+    --green:#3ecf6e; --red:#ff6b5e; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif;min-height:100vh}
+  h1,h2,h3,.brand{font-family:Oxanium,Inter,sans-serif}
+  a{color:var(--gold2)}
+  header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#101014,#0a0a0c);position:sticky;top:0;z-index:20}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+  .topbar{display:flex;align-items:center;gap:14px;padding:14px 0;flex-wrap:wrap}
+  .brand{font-size:26px;font-weight:800;letter-spacing:.06em}
+  .brand span{color:var(--gold)}
+  .tag{color:var(--dim);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  .demo-badge{margin-left:auto;background:#3a2c07;color:var(--gold2);border:1px solid var(--gold);
+    font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 10px;border-radius:999px;text-transform:uppercase}
+  nav{display:flex;gap:8px;padding:0 0 12px;flex-wrap:wrap}
+  nav button{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font:600 13px Inter;cursor:pointer}
+  nav button.on{background:var(--gold);color:#141005;border-color:var(--gold)}
+  .hero{padding:30px 0 8px}
+  .hero h1{font-size:34px;line-height:1.15;font-weight:800}
+  .hero h1 em{color:var(--gold);font-style:normal}
+  .hero p{color:var(--dim);margin-top:8px;max-width:640px;font-size:15px;line-height:1.55}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 4px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;min-width:150px}
+  .stat b{font-size:22px;display:block;font-family:Oxanium}
+  .stat small{color:var(--dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0 14px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--panel);border:1px solid var(--line);color:var(--txt);border-radius:999px;
+    padding:7px 13px;font:600 12.5px Inter;cursor:pointer}
+  .chip.on{background:var(--gold);color:#141005;border-color:var(--gold)}
+  .controls input,.controls select{background:var(--panel);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:9px 12px;font:500 13.5px Inter}
+  .controls input{flex:1;min-width:180px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;padding-bottom:30px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;cursor:pointer;
+    transition:border-color .15s, transform .15s}
+  .card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .card .addr{font:700 16.5px Oxanium}
+  .card .city{color:var(--dim);font-size:13px;margin:2px 0 10px}
+  .type{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 8px;border-radius:6px;background:#26262f;color:var(--gold2);margin-bottom:10px}
+  .type.probate{background:#3a2c07}.type.foreclosure{background:#3a1410;color:#ff9a8a}
+  .type.vacant{background:#0f2c1e;color:#7fe6a8}.type.tax{background:#241a3a;color:#c4a8ff}
+  .type.pre{background:#10303a;color:#8ad8ff}
+  .nums{display:flex;justify-content:space-between;gap:8px;background:var(--panel2);border-radius:10px;padding:10px 12px}
+  .nums div small{display:block;color:var(--dim);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  .nums div b{font-size:15.5px}
+  .spread{color:var(--green)}
+  .meta{display:flex;gap:14px;color:var(--dim);font-size:12.5px;margin-top:10px;flex-wrap:wrap}
+  .view{display:none}.view.on{display:block}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+  .panel h2{font-size:21px;margin-bottom:6px}
+  .panel h3{font-size:15px;margin:16px 0 8px;color:var(--gold2);letter-spacing:.04em}
+  .sub{color:var(--dim);font-size:13.5px;line-height:1.55}
+  .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+  .kv div{background:var(--panel2);border-radius:10px;padding:10px 12px}
+  .kv small{display:block;color:var(--dim);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  .kv b{font-size:17px}
+  label{display:block;font-size:12px;color:var(--dim);margin:10px 0 4px;letter-spacing:.05em;text-transform:uppercase}
+  input[type=number],input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line);
+    color:var(--txt);border-radius:10px;padding:10px 12px;font:600 15px Inter}
+  .calc-out{background:#0f2417;border:1px solid #1e4d2c;border-radius:12px;padding:14px 16px;margin-top:14px}
+  .calc-out b{font-size:26px;color:var(--green);font-family:Oxanium}
+  .btn{background:var(--gold);color:#141005;border:none;border-radius:11px;padding:12px 20px;
+    font:800 14px Oxanium;letter-spacing:.04em;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--gold)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .buyer{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--panel2);
+    border-radius:12px;padding:13px 15px;margin-top:10px;flex-wrap:wrap}
+  .buyer b{font-size:15px}.buyer small{color:var(--dim);display:block;font-size:12.5px;margin-top:2px}
+  .pill{font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:#0f2c1e;color:#7fe6a8}
+  .back{background:none;border:none;color:var(--gold2);font:600 13.5px Inter;cursor:pointer;padding:6px 0}
+  footer{border-top:1px solid var(--line);padding:22px 0 34px;color:var(--dim);font-size:12.5px;line-height:1.6}
+  .empty{color:var(--dim);padding:26px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius)}
+  @media(max-width:560px){.hero h1{font-size:27px}.brand{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <div class="brand">FLIP<span>VIZION</span></div>
+        <div class="tag">A Global Vizion Enterprise Company</div>
+      </div>
+      <div class="demo-badge">Demo data — v1 preview</div>
+    </div>
+    <nav>
+      <button id="nav-deals" class="on" onclick="show('deals')">Browse Deals</button>
+      <button id="nav-buyers" onclick="show('buyers')">Cash Buyers</button>
+      <button id="nav-how" onclick="show('how')">How It Works</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- DEALS -->
+  <section id="view-deals" class="view on">
+    <div class="hero">
+      <h1>Find the deal. <em>Flip the contract.</em> Keep the spread.</h1>
+      <p>Off-market and distressed properties with the value gap shown up front — what it's worth vs what it takes to lock it up. No buying the house. No loan. Contract in, contract out.</p>
+      <div class="stats">
+        <div class="stat"><b id="stat-count">0</b><small>Deals live</small></div>
+        <div class="stat"><b id="stat-spread">$0</b><small>Total spread on board</small></div>
+        <div class="stat"><b id="stat-buyers">0</b><small>Cash buyers ready</small></div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="chips" id="chips"></div>
+      <input id="q" type="text" placeholder="Search city or state… (e.g. Cleveland, OH)">
+      <select id="sort">
+        <option value="spread">Biggest spread</option>
+        <option value="pct">Biggest % gap</option>
+        <option value="low">Lowest price</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">No deals match that filter yet. Try another type or city.</div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="view-detail" class="view">
+    <button class="back" onclick="show('deals')">← Back to deals</button>
+    <div class="panel" id="detail"></div>
+    <div class="panel">
+      <h2>Profit Calculator</h2>
+      <p class="sub">Run the assignment math the way a buyer will. Your spread is what the contract is worth.</p>
+      <label>Cash buyer pays (assignment resale)</label>
+      <input type="number" id="c-resale" oninput="calc()">
+      <label>Estimated repairs</label>
+      <input type="number" id="c-repairs" oninput="calc()">
+      <label>Your contract price</label>
+      <input type="number" id="c-price" oninput="calc()">
+      <label>Closing / holding costs</label>
+      <input type="number" id="c-costs" value="1500" oninput="calc()">
+      <div class="calc-out">Potential profit<br><b id="c-out">$0</b>
+        <div class="sub" id="c-note" style="margin-top:4px"></div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="flip()">Flip This Contract</button>
+        <button class="btn ghost" onclick="matchBuyers()">Get Cash Buyers</button>
+      </div>
+      <div id="flip-out"></div>
+      <div id="match-out"></div>
+    </div>
+  </section>
+
+  <!-- BUYERS -->
+  <section id="view-buyers" class="view">
+    <div class="hero">
+      <h1>Cash <em>Buyers</em></h1>
+      <p>Buyers with proof of funds looking for assigned contracts. Match a deal to a buyer, assign the contract, collect your fee at closing.</p>
+    </div>
+    <div id="buyer-list" style="padding-bottom:30px"></div>
+  </section>
+
+  <!-- HOW -->
+  <section id="view-how" class="view">
+    <div class="panel" style="margin-top:22px">
+      <h2>How wholesaling works</h2>
+      <p class="sub">1. <b style="color:var(--txt)">Find a distressed deal</b> — probate, foreclosure, vacant, tax-delinquent. The seller needs out; the spread is your room.</p>
+      <p class="sub" style="margin-top:8px">2. <b style="color:var(--txt)">Get it under contract</b> at the low price, with an assignment clause.</p>
+      <p class="sub" style="margin-top:8px">3. <b style="color:var(--txt)">Flip the contract</b> to a cash buyer for more than your contract price.</p>
+      <p class="sub" style="margin-top:8px">4. <b style="color:var(--txt)">Keep the difference</b> — the assignment fee — at closing. You never owned the house.</p>
+      <h3>Honest notes</h3>
+      <p class="sub">This v1 runs on a clearly labeled demo dataset while live deal sources (public probate and court records, partner feeds) get wired in. Wholesaling rules vary by state — some states regulate contract assignment. Results vary based on deals, market, and execution. This is a tool, not financial advice.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    FLIPVIZION — a GLOBAL VIZION ENTERPRISE company. Demo dataset for product preview; listings shown are illustrative, not live offers. Results vary based on deals, market, and execution.
+  </div>
+</footer>
+
+<script>
+const DEALS = [
+ {id:1, addr:"1428 E 112th St", city:"Cleveland", st:"OH", type:"Probate", price:36818, value:103000, beds:3, baths:1, sqft:1240, dom:96, repairs:18500},
+ {id:2, addr:"7714 Wade Park Ave", city:"Cleveland", st:"OH", type:"Probate", price:29400, value:88000, beds:3, baths:1, sqft:1105, dom:121, repairs:22000},
+ {id:3, addr:"3920 Seymour Ave", city:"Cincinnati", st:"OH", type:"Foreclosure", price:41500, value:119000, beds:4, baths:2, sqft:1480, dom:64, repairs:26000},
+ {id:4, addr:"655 Linwood Ave", city:"Columbus", st:"OH", type:"Vacant", price:33900, value:96000, beds:3, baths:1, sqft:1176, dom:143, repairs:19800},
+ {id:5, addr:"1811 Republic St", city:"Cincinnati", st:"OH", type:"Tax Delinquent", price:27650, value:81000, beds:2, baths:1, sqft:940, dom:88, repairs:16400},
+ {id:6, addr:"1043 W 3rd St", city:"Dayton", st:"OH", type:"Pre-Probate", price:30200, value:89000, beds:3, baths:1, sqft:1090, dom:57, repairs:17900},
+ {id:7, addr:"428 Atlantic Ave", city:"Brooklyn", st:"NY", type:"Pre-Probate", price:412000, value:685000, beds:4, baths:2, sqft:1760, dom:73, repairs:64000},
+ {id:8, addr:"119-42 168th St", city:"Jamaica (Queens)", st:"NY", type:"Probate", price:338500, value:560000, beds:3, baths:2, sqft:1390, dom:109, repairs:47500},
+ {id:9, addr:"5623 S Morgan St", city:"Chicago", st:"IL", type:"Vacant", price:44900, value:128000, beds:3, baths:1, sqft:1215, dom:132, repairs:24100},
+ {id:10, addr:"9034 Van Dyke St", city:"Detroit", st:"MI", type:"Tax Delinquent", price:18750, value:64000, beds:3, baths:1, sqft:1050, dom:167, repairs:15200},
+ {id:11, addr:"2217 N 28th St", city:"Philadelphia", st:"PA", type:"Foreclosure", price:52300, value:141000, beds:3, baths:1, sqft:1188, dom:79, repairs:21700},
+ {id:12, addr:"1610 W Baltimore St", city:"Baltimore", st:"MD", type:"Vacant", price:23400, value:72000, beds:3, baths:1, sqft:1120, dom:154, repairs:13900}
+];
+const BUYERS = [
+ {name:"North Coast Capital LLC", area:"Cleveland / Cuyahoga County, OH", max:75000, types:"Probate, Vacant, Foreclosure", deals:34, funds:"Verified"},
+ {name:"Queen City Rentals Group", area:"Cincinnati, OH", max:90000, types:"Any distressed SFR", deals:21, funds:"Verified"},
+ {name:"BK Brownstone Buyers", area:"Brooklyn / Queens, NY", max:500000, types:"Pre-Probate, Probate", deals:12, funds:"Verified"},
+ {name:"Motor City Property Fund", area:"Detroit / Wayne County, MI", max:60000, types:"Tax Delinquent, Vacant", deals:47, funds:"Verified"},
+ {name:"Liberty Row Homes", area:"Philadelphia, PA", max:110000, types:"Foreclosure, Vacant", deals:18, funds:"Verified"},
+ {name:"Charm City Cash Offers", area:"Baltimore, MD", max:65000, types:"Vacant, Probate", deals:26, funds:"Verified"}
+];
+const TYPES = ["All","Probate","Foreclosure","Vacant","Tax Delinquent","Pre-Probate"];
+let curType = "All", curDeal = null;
+const $ = id => document.getElementById(id);
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+const spread = d => d.value - d.price;
+
+function show(v){
+  ["deals","detail","buyers","how"].forEach(x => $("view-"+x).classList.toggle("on", x===v));
+  ["deals","buyers","how"].forEach(x => { const b=$("nav-"+x); if(b) b.classList.toggle("on", x===v || (v==="detail"&&x==="deals")); });
+  window.scrollTo({top:0});
+}
+function renderChips(){
+  $("chips").innerHTML = TYPES.map(t =>
+    `<button class="chip ${t===curType?'on':''}" onclick="setType('${t}')">${t}</button>`).join("");
+}
+function setType(t){ curType = t; renderChips(); renderDeals(); }
+function renderDeals(){
+  const q = $("q").value.trim().toLowerCase();
+  let list = DEALS.filter(d => (curType==="All" || d.type===curType) &&
+    (!q || (d.city+" "+d.st).toLowerCase().includes(q) || d.addr.toLowerCase().includes(q)));
+  const s = $("sort").value;
+  list.sort((a,b) => s==="spread" ? spread(b)-spread(a) : s==="pct" ? (spread(b)/b.value)-(spread(a)/a.value) : a.price-b.price);
+  $("grid").innerHTML = list.map(d => `
+    <article class="card" onclick="openDeal(${d.id})">
+      <span class="type ${d.type.split(' ')[0].toLowerCase()}">${d.type}</span>
+      <div class="addr">${d.addr}</div>
+      <div class="city">${d.city}, ${d.st}</div>
+      <div class="nums">
+        <div><small>Contract price</small><b>${money(d.price)}</b></div>
+        <div><small>Est. value</small><b>${money(d.value)}</b></div>
+        <div><small>Spread</small><b class="spread">+${money(spread(d))}</b></div>
+      </div>
+      <div class="meta"><span>${d.beds} bd</span><span>${d.baths} ba</span><span>${d.sqft.toLocaleString()} sqft</span><span>${d.dom} days listed</span></div>
+    </article>`).join("");
+  $("empty").style.display = list.length ? "none" : "block";
+  $("stat-count").textContent = DEALS.length;
+  $("stat-spread").textContent = money(DEALS.reduce((a,d)=>a+spread(d),0));
+  $("stat-buyers").textContent = BUYERS.length;
+}
+function openDeal(id){
+  curDeal = DEALS.find(d => d.id===id);
+  const d = curDeal;
+  $("detail").innerHTML = `
+    <span class="type ${d.type.split(' ')[0].toLowerCase()}">${d.type}</span>
+    <h2>${d.addr}</h2>
+    <p class="sub">${d.city}, ${d.st} — ${d.beds} bd · ${d.baths} ba · ${d.sqft.toLocaleString()} sqft · ${d.dom} days listed</p>
+    <h3>Contract view</h3>
+    <div class="kv">
+      <div><small>Purchase price</small><b>${money(d.price)}</b></div>
+      <div><small>Estimated value (ARV)</small><b>${money(d.value)}</b></div>
+      <div><small>Gross spread</small><b class="spread">+${money(spread(d))}</b></div>
+      <div><small>Est. repairs</small><b>${money(d.repairs)}</b></div>
+      <div><small>Earnest money</small><b>${money(Math.max(500, Math.round(d.price*0.02)))}</b></div>
+      <div><small>Suggested buyer price</small><b>${money(Math.round(d.value*0.78))}</b></div>
+    </div>`;
+  $("c-resale").value = Math.round(d.value*0.78);
+  $("c-repairs").value = d.repairs;
+  $("c-price").value = d.price;
+  $("flip-out").innerHTML = ""; $("match-out").innerHTML = "";
+  calc(); show("detail");
+}
+function calc(){
+  const r = +$("c-resale").value||0, rep = +$("c-repairs").value||0,
+        p = +$("c-price").value||0, c = +$("c-costs").value||0;
+  const profit = r - rep - p - c;
+  $("c-out").textContent = money(profit);
+  $("c-out").style.color = profit >= 0 ? "var(--green)" : "var(--red)";
+  $("c-note").textContent = profit >= 0
+    ? "Buyer pays " + money(r) + " · repairs " + money(rep) + " · your contract " + money(p) + " · costs " + money(c)
+    : "That math loses money — the buyer price has to beat contract + repairs + costs.";
+}
+function flip(){
+  const d = curDeal, r = +$("c-resale").value||0, p = +$("c-price").value||0;
+  $("flip-out").innerHTML = `
+    <div class="calc-out">
+      <b style="font-size:19px;color:var(--gold2)">Contract ready to assign</b>
+      <div class="sub" style="margin-top:6px">
+        Property: ${d.addr}, ${d.city}, ${d.st} (${d.type})<br>
+        Your contract: ${money(p)} → Assign to cash buyer at: ${money(r)}<br>
+        Your assignment fee: <b style="color:var(--green)">${money(r-p)}</b> — collected at closing. You never take title.
+      </div>
+    </div>`;
+}
+function buyerRows(list){
+  return list.map(b => `
+    <div class="buyer">
+      <div><b>${b.name}</b><small>${b.area} · up to ${money(b.max)} · ${b.types} · ${b.deals} deals closed</small></div>
+      <span class="pill">Funds ${b.funds}</span>
+    </div>`).join("");
+}
+function matchBuyers(){
+  const d = curDeal;
+  const hits = BUYERS.filter(b => b.max >= d.price && (b.area.includes(d.st) || b.types.toLowerCase().includes(d.type.toLowerCase())));
+  $("match-out").innerHTML = `<h3 style="font:700 15px Oxanium;color:var(--gold2);margin-top:18px">Matched cash buyers (${hits.length})</h3>` +
+    (hits.length ? buyerRows(hits) : `<p class="sub">No direct match in the demo buyer pool for this deal yet.</p>`);
+}
+$("buyer-list").innerHTML = buyerRows(BUYERS);
+$("q").addEventListener("input", renderDeals);
+$("sort").addEventListener("change", renderDeals);
+renderChips(); renderDeals();
+</script>
+</body>
+</html>
