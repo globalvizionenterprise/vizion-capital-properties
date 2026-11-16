@@ -1,7 +1,9 @@
-# FLIPVIZION (working name)
+# VIZION CAPITAL PROPERTIES
 
-A new GLOBAL VIZION ENTERPRISE entity — our own AI real-estate wholesaling
-platform. Ordered by Keyz 2026-11-15 from an Instagram reel.
+A GLOBAL VIZION ENTERPRISE entity — our own AI real-estate wholesaling
+platform and the umbrella's real-estate company. Name chosen by Keyz
+2026-11-15 (corporate pick over the FLIPVIZION working name). Ordered by
+Keyz 2026-11-15 from an Instagram reel.
 
 ## The source (found 2026-11-15)
 
@@ -51,5 +53,6 @@ Separate site, own brand, own code — same class of tool:
 ## Status
 
 - 2026-11-15: research saved, v1 site build started.
-- Working name FLIPVIZION until Keyz picks a final name (repo/site rename in
-  one step, same as Vizion Chat / DragonDance pattern).
+- Name LOCKED 2026-11-15: VIZION CAPITAL PROPERTIES. Repo:
+  https://github.com/globalvizionenterprise/vizion-capital-properties
+  Site: https://globalvizionenterprise.github.io/vizion-capital-properties/
