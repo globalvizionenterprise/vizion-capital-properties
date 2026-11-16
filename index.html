@@ -104,6 +104,7 @@
       <button id="nav-deals" class="on" onclick="show('deals')">Browse Deals</button>
       <button id="nav-buyers" onclick="show('buyers')">Cash Buyers</button>
       <button id="nav-how" onclick="show('how')">How It Works</button>
+      <button id="nav-research" onclick="show('research')">Property Research</button>
     </nav>
   </div>
 </header>
@@ -181,6 +182,30 @@
       <p class="sub">This v1 runs on a clearly labeled demo dataset while live deal sources (public probate and court records, partner feeds) get wired in. Wholesaling rules vary by state — some states regulate contract assignment. Results vary based on deals, market, and execution. This is a tool, not financial advice.</p>
     </div>
   </section>
+
+  <section id="view-research" class="view">
+    <h2>Property <em>Research</em></h2>
+    <p class="sub">The full history of a place — ownership, foreclosure, probate, taxes, liens, violations — pulled from official records only.</p>
+    <div class="card" style="border-color:var(--gold);margin-bottom:14px">
+      <b style="color:var(--gold)">THE VCP STANDARD:</b> every fact on a dossier carries its <b>source</b> and the <b>date checked</b>.
+      A property is only labeled foreclosure, probate or lien when a court or county record says so.
+      No record = no claim. Estimates are labeled estimates. No false accusations — ever.
+    </div>
+    <div class="card">
+      <div class="grid">
+        <label>Property address<input id="r-addr" placeholder="123 Example St"></label>
+        <label>City<input id="r-city" placeholder="Brooklyn"></label>
+        <label>State<input id="r-state" placeholder="NY" value="NY"></label>
+        <label>ZIP<input id="r-zip" placeholder="11237"></label>
+      </div>
+      <button class="cta" onclick="buildDossier()">Build Dossier</button>
+      <div id="dossier"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Saved dossiers</h3>
+      <div id="dossier-list" class="small"></div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -220,7 +245,7 @@ const spread = d => d.value - d.price;
 
 function show(v){
   ["deals","detail","buyers","how"].forEach(x => $("view-"+x).classList.toggle("on", x===v));
-  ["deals","buyers","how"].forEach(x => { const b=$("nav-"+x); if(b) b.classList.toggle("on", x===v || (v==="detail"&&x==="deals")); });
+  ["deals","buyers","how","research"].forEach(x => { const b=$("nav-"+x); if(b) b.classList.toggle("on", x===v || (v==="detail"&&x==="deals")); });
   window.scrollTo({top:0});
 }
 function renderChips(){
@@ -312,6 +337,50 @@ $("buyer-list").innerHTML = buyerRows(BUYERS);
 $("q").addEventListener("input", renderDeals);
 $("sort").addEventListener("change", renderDeals);
 renderChips(); renderDeals();
+
+const CHECKS = ["Ownership & deed history","Foreclosure / lis pendens","Probate (Surrogate's Court)","Tax status & liens","Violations & permits (DOB / HPD)","Last sale price & date","Value estimate (labeled estimate)"];
+const SOURCES_NYC = [
+  ["ACRIS — deeds, mortgages, liens (NYC)", "https://a836-acris.nyc.gov/DS/DocumentSearch/Index"],
+  ["NY Courts eCourts — foreclosure cases", "https://iapps.courts.state.ny.us/nyscef/CaseSearch"],
+  ["Kings County Surrogate's Court — probate", "https://www.nycourts.gov/courts/2jd/kingscounty/surrogates/index.shtml"],
+  ["NYC Dept. of Finance — taxes & property profile", "https://a836-pts-access.nyc.gov/care/search/commonsearch.aspx?mode=address"],
+  ["DOB NOW — permits & violations (NYC)", "https://a810-dobnow.nyc.gov/Publish/Index.html"],
+  ["HPD Online — housing violations (NYC)", "https://www.nyc.gov/site/hpd/services-and-information/hpd-online.page"]
+];
+function dossierKey(){ return ($("r-addr").value.trim()+"|"+$("r-city").value.trim()+"|"+$("r-state").value.trim()).toLowerCase(); }
+function buildDossier(){
+  const addr=$("r-addr").value.trim(), city=$("r-city").value.trim(), st=($("r-state").value.trim()||"NY").toUpperCase(), zip=$("r-zip").value.trim();
+  if(!addr){ alert("Enter the property address first."); return; }
+  const saved = loadDossiers()[dossierKey()] || {};
+  const rows = CHECKS.map((c,i)=>{
+    const s = saved[c]||{};
+    return `<tr><td>${c}</td>
+      <td><select id="ds-${i}"><option value="">Not checked</option>
+        ${["Confirmed","Clear / none found","Found — see notes"].map(o=>`<option ${s.status===o?"selected":""}>${o}</option>`).join("")}</select></td>
+      <td><input id="dn-${i}" placeholder="Source (record name)" value="${s.source||""}"></td>
+      <td>${s.date||"—"}</td></tr>`;
+  }).join("");
+  const src = (st==="NY") ? SOURCES_NYC.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a></li>`).join("")
+    : `<li>County Clerk / Recorder of Deeds — deeds & liens for ${city||"the"} property's county</li><li>County court records — foreclosure & probate filings</li><li>County tax assessor / treasurer — tax status</li><li>City building dept. — permits & violations</li>`;
+  $("dossier").innerHTML = `<h3 style="margin:14px 0 4px">${addr}, ${city} ${st} ${zip}</h3>
+    <p class="small">Official sources to pull for this property:</p><ul class="small">${src}</ul>
+    <table><tr><th>Check</th><th>Status</th><th>Source</th><th>Date checked</th></tr>${rows}</table>
+    <label>Research notes<textarea id="d-notes" rows="3" placeholder="What the records actually say — quote the record, don't summarize from memory.">${saved.notes||""}</textarea></label>
+    <button class="cta" onclick="saveDossier()">Save Dossier</button>
+    <button onclick="window.print()">Print</button>`;
+}
+function loadDossiers(){ try{ return JSON.parse(localStorage.getItem("vcp_dossiers")||"{}"); }catch(e){ return {}; } }
+function saveDossier(){
+  const all = loadDossiers(); const entry = { addr:$("r-addr").value.trim(), city:$("r-city").value.trim(), state:$("r-state").value.trim(), zip:$("r-zip").value.trim(), notes:$("d-notes").value, checks:{} };
+  CHECKS.forEach((c,i)=>{ const st=$("ds-"+i).value; if(st) entry.checks[c]={ status:st, source:$("dn-"+i).value.trim(), date:new Date().toISOString().slice(0,10) }; });
+  all[dossierKey()] = entry; localStorage.setItem("vcp_dossiers", JSON.stringify(all));
+  renderDossierList(); alert("Dossier saved. Every claim on it traces to a named record.");
+}
+function renderDossierList(){
+  const all = loadDossiers(); const keys = Object.keys(all);
+  $("dossier-list").innerHTML = keys.length ? keys.map(k=>{ const d=all[k]; const done=Object.keys(d.checks||{}).length; return `<div>${d.addr}, ${d.city} ${d.state} — ${done}/7 checks recorded</div>`; }).join("") : "No dossiers yet. Run the first property above.";
+}
+renderDossierList();
 </script>
 </body>
 </html>
